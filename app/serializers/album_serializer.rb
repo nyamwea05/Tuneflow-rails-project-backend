@@ -1,3 +1,3 @@
 class AlbumSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :name, :album_image_url, :description
 end
