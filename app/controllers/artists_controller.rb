@@ -3,4 +3,13 @@ class ArtistsController < ApplicationController
     artists = Artist.all
     render json: artists
   end
+
+  def show
+    artist = Artist.find_by(:id params[id:])
+  end
+  private
+
+  def artist_params
+    params.permit(:name)
+  end
 end
