@@ -44,7 +44,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.permit(:comment)
+    params.permit(:comment, :song_id)
   end
 
   def validation_error
