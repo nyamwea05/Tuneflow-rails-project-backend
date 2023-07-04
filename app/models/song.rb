@@ -1,5 +1,8 @@
 class Song < ApplicationRecord
-  belongs_to :artist_id
-  belongs_to :album_id
-  belongs_to :playlist_id
+  belongs_to :artist
+  belongs_to :album
+  belongs_to :playlist
+
+  has_many :comments
+  has_many :favorites
 end
