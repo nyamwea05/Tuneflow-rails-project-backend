@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_03_090415) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_04_071429) do
   create_table "albums", force: :cascade do |t|
     t.string "name"
     t.string "album_image_url"
@@ -73,6 +73,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_090415) do
     t.string "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "phone"
+    t.string "email"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "avatar"
   end
 
   add_foreign_key "comments", "song_ids"
