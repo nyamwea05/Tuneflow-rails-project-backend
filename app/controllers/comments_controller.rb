@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     if authorized
       comment = Comment.create(comment_params)
     else
-      render json: validation_error
+      render json: {error: "sign in to continue"}, status: :unauthorized
     end
 
   end
@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
         render json: comment
       end
     else
-      render json: validation_error
+      render json: {error: "sign in to continue"}, status: :unauthorized
     end
   end
 
@@ -33,10 +33,10 @@ class CommentsController < ApplicationController
         comment.destroy
         # render json:
       else
-        render json: {error: "comment not found"} status: :not_found
+        render json: {error: "comment not found"}, status: :not_found
       end
     else
-      render json: validation_error
+      render json: {error: "sign in to continue"}, status: :unauthorized
     end
 
   end
@@ -47,8 +47,8 @@ class CommentsController < ApplicationController
     params.permit(:comment, :song_id)
   end
 
-  def validation_error
-     {error: "sign in to continue"} status: :unauthorized
-  end
+  # def validation_error
+  #    error: "sign in to continue" status: :unauthorized
+  # end
 
 end
