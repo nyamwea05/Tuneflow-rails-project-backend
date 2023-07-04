@@ -1,12 +1,13 @@
 class ArtistsController < ApplicationController
+  wrap_parameters format: []
   def index
     artists = Artist.all
-    render json: artists
+    render json: artists, status: :ok
   end
 
   def show
     artist = Artist.find_by(id: params[:id])
-    render json: artist
+    render json: artist, status: :ok
   end
   private
 
@@ -16,4 +17,4 @@ class ArtistsController < ApplicationController
 end
 
 
-# remmember to change ruby version
+# remember to change ruby version

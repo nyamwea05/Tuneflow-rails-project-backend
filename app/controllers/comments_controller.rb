@@ -1,7 +1,8 @@
 class CommentsController < ApplicationController
+  wrap_parameters format: []
   def index
     comments = Comment.all
-    render json: comments
+    render json: comments, status: :ok
   end
 
   def create
@@ -31,7 +32,11 @@ class CommentsController < ApplicationController
     if authorized
       if comment
         comment.destroy
+# <<<<<<< 31-add-seeds-data
         render json: {message: "Deletion successful"}, status: :no_content
+=======
+        render json: {message: "Deletion successful"}, status: :no_content
+# >>>>>>> main
       else
         render json: {error: "comment not found"}, status: :not_found
       end

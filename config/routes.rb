@@ -2,12 +2,12 @@ Rails.application.routes.draw do
   resources :users
   resources :songs
   resources :favorites, only:[:show, :create, :destroy, :index ]
-  resources :playlists, only:[:index, :create, :update, :destroy]
+  resources :playlists, only:[:index, :create, :update, :destroy, :show]
   resources :comments, only:[:update, :index, :destroy, :create]
   resources :albums, only:[:index, :show]
   resources :artists, only:[:index, :show]
 
-#custom routes 
+#custom routes
   post '/signup' ,to: 'users#create'
   get '/me',to: 'users#show'
   post '/login', to: 'sessions#create'
