@@ -16,4 +16,4 @@ class ArtistsController < ApplicationController
 end
 
 
-# remmember to change ruby version
+# remember to change ruby version
