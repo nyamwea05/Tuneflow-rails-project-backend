@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  wrap_parameters format: []
   def index
     comments = Comment.all
     render json: comments, status: :ok

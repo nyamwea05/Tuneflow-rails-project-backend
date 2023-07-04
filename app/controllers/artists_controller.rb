@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+  wrap_parameters format: []
   def index
     artists = Artist.all
     render json: artists, status: :ok
