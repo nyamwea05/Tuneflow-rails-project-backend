@@ -5,7 +5,8 @@ class ArtistsController < ApplicationController
   end
 
   def show
-    artist = Artist.find_by(:id params[id:])
+    artist = Artist.find_by(id: params[:id])
+    render json: artist
   end
   private
 
@@ -13,3 +14,6 @@ class ArtistsController < ApplicationController
     params.permit(:name)
   end
 end
+
+
+# remmember to change ruby version
