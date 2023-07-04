@@ -1,7 +1,8 @@
 class CommentsController < ApplicationController
+  wrap_parameters format: []
   def index
     comments = Comment.all
-    render json: comments
+    render json: comments, status: :ok
   end
 
   def create
@@ -19,7 +20,7 @@ class CommentsController < ApplicationController
       if comment
         comment = Comment.update(comment_params)
       else
-        render json: comment
+        render json: comment, status: :ok
       end
     else
       render json: {error: "sign in to continue"}, status: :unauthorized
@@ -31,7 +32,7 @@ class CommentsController < ApplicationController
     if authorized
       if comment
         comment.destroy
-        # render json:
+        render json: status: :no_content
       else
         render json: {error: "comment not found"}, status: :not_found
       end

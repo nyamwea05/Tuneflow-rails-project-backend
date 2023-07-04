@@ -3,7 +3,7 @@ class PlaylistsController < ApplicationController
 
   def index
     playlists = Playlist.all
-    render json: playlists
+    render json: playlists, status: :ok
   end
 
   def create
@@ -22,7 +22,7 @@ class PlaylistsController < ApplicationController
   def show
     playlist = Playlist.find_by(id: params[:id])
     if playlist
-      render json: playlist.song
+      render json: playlist.song, status: :ok
     else
       render json: {error: "playlist not found"}, status: :not_found
     end
@@ -33,7 +33,7 @@ class PlaylistsController < ApplicationController
     if authorized
       if playlist
         playlist = Playlist.update(playlist_params)
-        render json: playlist
+        render json: playlist, status: :okay
       else
         render json: {error: "playlist not found"}, status: :not_found
       end
