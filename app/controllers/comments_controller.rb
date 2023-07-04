@@ -5,7 +5,12 @@ class CommentsController < ApplicationController
   end
 
   def create
-    comment = Comment.create(comment_params)
+    if authorized
+      comment = Comment.create(comment_params)
+    else
+      render json: validation_error
+    end
+
   end
 
   def update
