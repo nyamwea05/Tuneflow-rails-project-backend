@@ -9,6 +9,7 @@ class AlbumsController < ApplicationController
     if album
       render json: album, status: :ok
     else
+      render json: {error: "album not found"}, status: :not_found
     end
   end
 
