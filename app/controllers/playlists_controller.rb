@@ -10,7 +10,7 @@ class PlaylistsController < ApplicationController
     playlist = Playlist.create(playlist_params)
     if authorized
       if playlist
-        render json: playlist
+        render json: playlist, status: :created
       else
         render json: {error: "unable to create"}, status: :unprocessable_entity
       end
@@ -29,7 +29,31 @@ class PlaylistsController < ApplicationController
   end
 
   def update
-    
+    playlist = Playlist.find_by(id: params[:id])
+    if authorized
+      if playlist
+        playlist = Playlist.update(playlist_params)
+        render json: playlist
+      else
+        render json: {error: "playlist not found"}, status: :not_found
+      end
+    else
+      render json: {error: "sign in to continue"}, status: :unauthorized
+    end
+  end
+
+  def destroy
+    playlist = Playlist.find_by(id: params[:id])
+    if authorized
+      if playlist
+        playlist.destroy
+        render json: status: :no_content
+      else
+        render json: {error: "playlist not found"}, status: :not_found
+      end
+    else
+      render json: {error: "sign in to continue"}, status: :unauthorized
+    end
   end
 
   private
