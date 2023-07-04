@@ -32,7 +32,11 @@ class CommentsController < ApplicationController
     if authorized
       if comment
         comment.destroy
-        render json: status: :no_content
+# <<<<<<< 31-add-seeds-data
+        render json: {message: "Deletion successful"}, status: :no_content
+=======
+        render json: {message: "Deletion successful"}, status: :no_content
+# >>>>>>> main
       else
         render json: {error: "comment not found"}, status: :not_found
       end

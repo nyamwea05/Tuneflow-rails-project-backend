@@ -20,3 +20,4 @@ class AlbumsController < ApplicationController
 
   end
 end
+
