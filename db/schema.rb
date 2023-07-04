@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_04_071429) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_04_091517) do
   create_table "albums", force: :cascade do |t|
     t.string "name"
     t.string "album_image_url"
@@ -28,19 +28,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_04_071429) do
 
   create_table "comments", force: :cascade do |t|
     t.string "comment"
-    t.integer "song_id_id", null: false
+    t.integer "song_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["song_id_id"], name: "index_comments_on_song_id_id"
+    t.integer "user_id"
+    t.index ["song_id"], name: "index_comments_on_song_id"
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "song_id_id", null: false
-    t.integer "user_id_id", null: false
+    t.integer "song_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["song_id_id"], name: "index_favorites_on_song_id_id"
-    t.index ["user_id_id"], name: "index_favorites_on_user_id_id"
+    t.index ["song_id"], name: "index_favorites_on_song_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -55,15 +56,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_04_071429) do
     t.string "genre"
     t.string "description"
     t.string "image_path"
-    t.datetime "release_date"
-    t.integer "artist_id_id", null: false
-    t.integer "album_id_id", null: false
-    t.integer "playlist_id_id", null: false
+    t.string "release_date"
+    t.integer "artist_id", null: false
+    t.integer "album_id", null: false
+    t.integer "playlist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["album_id_id"], name: "index_songs_on_album_id_id"
-    t.index ["artist_id_id"], name: "index_songs_on_artist_id_id"
-    t.index ["playlist_id_id"], name: "index_songs_on_playlist_id_id"
+    t.index ["album_id"], name: "index_songs_on_album_id"
+    t.index ["artist_id"], name: "index_songs_on_artist_id"
+    t.index ["playlist_id"], name: "index_songs_on_playlist_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -80,10 +81,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_04_071429) do
     t.string "avatar"
   end
 
-  add_foreign_key "comments", "song_ids"
-  add_foreign_key "favorites", "song_ids"
-  add_foreign_key "favorites", "user_ids"
-  add_foreign_key "songs", "album_ids"
-  add_foreign_key "songs", "artist_ids"
-  add_foreign_key "songs", "playlist_ids"
+  add_foreign_key "comments", "songs"
+  add_foreign_key "favorites", "songs"
+  add_foreign_key "favorites", "users"
+  add_foreign_key "songs", "albums"
+  add_foreign_key "songs", "artists"
+  add_foreign_key "songs", "playlists"
 end
