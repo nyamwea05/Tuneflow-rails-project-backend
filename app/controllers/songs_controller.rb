@@ -16,20 +16,15 @@ class SongsController < ApplicationController
     end
 
     def create
-      if authorized
-        song = Song.new(song_params)
-        if song.save
-          render json: song
-        else
-          render_validation_errors(song.errors.full_messages)
-        end
+      song = Song.new(song_params)
+      if song.save
+        render json: song
       else
-        render_authorization_errors("Not authorized")
+        render_validation_errors(song.errors.full_messages)
       end
     end
 
     def update
-      if session[:user_id]
         song = Song.find_by(id: params[:id])
         if song
           if song.update(song_params)
@@ -40,25 +35,18 @@ class SongsController < ApplicationController
         else
           render_error("Song not found")
         end
-      else
-        render_authorization_errors("Not authorized")
-      end
     end
 
     def destroy
-      if session[:user_id]
-        song = Song.find_by(id: params[:id])
-        if song
-          song.playlist.destroy_all
-          song.favorites.destroy_all
-          song.comments.destroy_all
-          song.destroy
-          head :no_content
-        else
-          render_error("Song not found")
-        end
+      song = Song.find_by(id: params[:id])
+      if song
+        song.playlist.destroy_all
+        song.favorites.destroy_all
+        song.comments.destroy_all
+        song.destroy
+        head :no_content
       else
-        render_authorization_errors("Not authorized")
+        render_error("Song not found")
       end
     end
 

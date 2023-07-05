@@ -8,46 +8,37 @@ class CommentsController < ApplicationController
 
   def create
     comment = Comment.new(comment_params)
-    if authorized
-      if comment.save
-        render json: comment, status: :ok
-      else
-        render json: { error: "Unable to create comment" }, status: :unprocessable_entity
-      end
+    if comment.save
+      render json: comment, status: :ok
     else
-      render json: { error: "Sign in to continue" }, status: :unauthorized
+      render json: { error: "Unable to create comment" }, status: :unprocessable_entity
     end
   end
 
   def update
     comment = Comment.find_by(id: params[:id])
-    if authorized
-      if comment
-        if comment.update(comment_params)
-          render json: comment, status: :ok
-        else
-          render json: { error: "Unable to update comment" }, status: :unprocessable_entity
-        end
+    if comment
+      if comment.update(comment_params)
+        render json: comment, status: :ok
       else
-        render json: { error: "Comment not found" }, status: :not_found
+        render json: { error: "Unable to update comment" }, status: :unprocessable_entity
       end
     else
-      render json: { error: "Sign in to continue" }, status: :unauthorized
+      render json: { error: "Comment not found" }, status: :not_found
     end
+
   end
 
   def destroy
     comment = Comment.find_by(id: params[:id])
-    if authorized
-      if comment
-        comment.destroy
-        render json: { message: "Deletion successful" }, status: :no_content
-      else
-        render json: { error: "Comment not found" }, status: :not_found
-      end
+
+    if comment
+      comment.destroy
+      render json: { message: "Deletion successful" }, status: :no_content
     else
-      render json: { error: "Sign in to continue" }, status: :unauthorized
+      render json: { error: "Comment not found" }, status: :not_found
     end
+
   end
 
   private
