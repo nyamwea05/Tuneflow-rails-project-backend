@@ -8,14 +8,10 @@ class CommentsController < ApplicationController
 
   def create
     comment = Comment.new(comment_params)
-    if authorized
-      if comment.save
-        render json: comment, status: :ok
-      else
-        render json: { error: "Unable to create comment" }, status: :unprocessable_entity
-      end
+    if comment.save
+      render json: comment, status: :ok
     else
-      render json: { error: "Sign in to continue" }, status: :unauthorized
+      render json: { error: "Unable to create comment" }, status: :unprocessable_entity
     end
   end
 
