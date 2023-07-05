@@ -7,15 +7,11 @@ class PlaylistsController < ApplicationController
   end
 
   def create
-    if authorized
-      playlist = Playlist.new(playlist_params)
-      if playlist.save
-        render json: playlist, status: :created
-      else
-        render json: { error: "Unable to create playlist" }, status: :unprocessable_entity
-      end
+    playlist = Playlist.new(playlist_params)
+    if playlist.save
+      render json: playlist, status: :created
     else
-      render json: { error: "Sign in to continue" }, status: :unauthorized
+      render json: { error: "Unable to create playlist" }, status: :unprocessable_entity
     end
   end
 
@@ -30,33 +26,25 @@ class PlaylistsController < ApplicationController
 
   def update
     playlist = Playlist.find_by(id: params[:id])
-    if authorized
-      if playlist
-        playlist.assign_attributes(playlist_params)
-        if playlist.save
-          render json: playlist, status: :ok
-        else
-          render json: { error: "Unable to update playlist" }, status: :unprocessable_entity
-        end
+    if playlist
+      playlist.assign_attributes(playlist_params)
+      if playlist.save
+        render json: playlist, status: :ok
       else
-        render json: { error: "Playlist not found" }, status: :not_found
+        render json: { error: "Unable to update playlist" }, status: :unprocessable_entity
       end
     else
-      render json: { error: "Sign in to continue" }, status: :unauthorized
+      render json: { error: "Playlist not found" }, status: :not_found
     end
   end
 
   def destroy
     playlist = Playlist.find_by(id: params[:id])
-    if authorized
-      if playlist
-        playlist.destroy
-        render json: { message: "Deletion successful" }, status: :no_content
-      else
-        render json: { error: "Playlist not found" }, status: :not_found
-      end
+    if playlist
+      playlist.destroy
+      render json: { message: "Deletion successful" }, status: :no_content
     else
-      render json: { error: "Sign in to continue" }, status: :unauthorized
+      render json: { error: "Playlist not found" }, status: :not_found
     end
   end
 
