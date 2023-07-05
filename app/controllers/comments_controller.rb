@@ -1,29 +1,38 @@
 class CommentsController < ApplicationController
   wrap_parameters format: []
+
   def index
     comments = Comment.all
     render json: comments, status: :ok
   end
 
   def create
+    comment = Comment.new(comment_params)
     if authorized
-      comment = Comment.create(comment_params)
+      if comment.save
+        render json: comment, status: :ok
+      else
+        render json: { error: "Unable to create comment" }, status: :unprocessable_entity
+      end
     else
-      render json: {error: "sign in to continue"}, status: :unauthorized
+      render json: { error: "Sign in to continue" }, status: :unauthorized
     end
-
   end
 
   def update
     comment = Comment.find_by(id: params[:id])
     if authorized
       if comment
-        comment = Comment.update(comment_params)
+        if comment.update(comment_params)
+          render json: comment, status: :ok
+        else
+          render json: { error: "Unable to update comment" }, status: :unprocessable_entity
+        end
       else
-        render json: comment, status: :ok
+        render json: { error: "Comment not found" }, status: :not_found
       end
     else
-      render json: {error: "sign in to continue"}, status: :unauthorized
+      render json: { error: "Sign in to continue" }, status: :unauthorized
     end
   end
 
@@ -32,18 +41,13 @@ class CommentsController < ApplicationController
     if authorized
       if comment
         comment.destroy
-# <<<<<<< 31-add-seeds-data
-        render json: {message: "Deletion successful"}, status: :no_content
-=======
-        render json: {message: "Deletion successful"}, status: :no_content
-# >>>>>>> main
+        render json: { message: "Deletion successful" }, status: :no_content
       else
-        render json: {error: "comment not found"}, status: :not_found
+        render json: { error: "Comment not found" }, status: :not_found
       end
     else
-      render json: {error: "sign in to continue"}, status: :unauthorized
+      render json: { error: "Sign in to continue" }, status: :unauthorized
     end
-
   end
 
   private
@@ -51,9 +55,4 @@ class CommentsController < ApplicationController
   def comment_params
     params.permit(:comment, :song_id)
   end
-
-  # def validation_error
-  #    error: "sign in to continue" status: :unauthorized
-  # end
-
 end

@@ -1,32 +1,42 @@
 class FavoritesController < ApplicationController
   def index
     favorites = Favorite.all
+    render json: favorites, status: :ok
   end
 
   def show
     favorite = Favorite.find_by(id: params[:id])
-    render json: favorite, status: :ok
+    if favorite
+      render json: favorite, status: :ok
+    else
+      render json: { error: "Favorite not found" }, status: :not_found
+    end
   end
 
   def create
-    favorite = Favorite.save(favorite_params)
+    favorite = Favorite.new(favorite_params)
     if authorized
-      if favorite
-        render json: favorite, status: :ok
+      if favorite.save
+        render json: favorite, status: :created
       else
-        render json: {error: "unable to create"}, status: :unprocessable_entity
+        render json: { error: "Unable to create favorite" }, status: :unprocessable_entity
       end
     else
-      render json: {error: "sign in to continue"}, status: :unauthorized
+      render json: { error: "Sign in to continue" }, status: :unauthorized
     end
   end
 
   def destroy
     if authorized
-      favorite = Favorite.destroy
-      render json: {message: "Deletion successful"}, status: :no_content
+      favorite = Favorite.find_by(id: params[:id])
+      if favorite
+        favorite.destroy
+        render json: { message: "Deletion successful" }, status: :no_content
+      else
+        render json: { error: "Favorite not found" }, status: :not_found
+      end
     else
-      render json: {error: "Sign in to continue"}, status: :unauthorized
+      render json: { error: "Sign in to continue" }, status: :unauthorized
     end
   end
 
