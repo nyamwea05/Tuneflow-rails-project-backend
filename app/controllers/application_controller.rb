@@ -2,7 +2,7 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
 
-    before_action :authorized, except: [:index, :show]
+    before_action :authorized, except: [:index, :show, :albumsong]
 
   def current_user
     User.find_by(id: session[:user_id])
