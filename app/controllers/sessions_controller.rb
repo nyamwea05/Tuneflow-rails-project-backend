@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-      skip_before_action :authorized, only: [:create]
+      skip_before_action :authorized, only: [:create, :destroy]
       wrap_parameters :user, include: %i[username password]
 
       def create
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
         log_out_message
       end
 
-      private 
+      private
       def login_params
         params.require(:user).permit(:username, :password)
       end

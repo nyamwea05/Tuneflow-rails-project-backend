@@ -7,7 +7,8 @@ class AlbumsController < ApplicationController
   def show
     album = Album.find_by(id: params[:id])
     if album
-      render json: album, status: :ok
+      render json: albums.song,include_songs: true status: :ok
+
     else
       render json: {error: "album not found"}, status: :not_found
     end
