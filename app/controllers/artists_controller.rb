@@ -11,9 +11,9 @@ class ArtistsController < ApplicationController
   end
 
   def albums
-    album = Album.find_by(id: params[:id])
-    album_song = album.songs
-    render json: album_song, status: :ok
+    artist = Artist.find(params[:id])
+    artist_albums = artist.albums
+    render json: artist_albums
   end
   private
 
