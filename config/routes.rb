@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/artists/:id/songs', to: 'artists#albumsong'
 
+  patch '/users/:username/update_password', to: 'users#update_password'
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
