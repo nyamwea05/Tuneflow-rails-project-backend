@@ -16,7 +16,7 @@ module TuneflowRailsBackend
     config.action_dispatch.cookies_same_site_protection = :strict
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://localhost:3005' # Add your desired origin here
+        origins 'https://taupe-pudding-6713f5.netlify.app/' # Add your desired origin here
         resource '*',
           headers: :any,
           methods: [:get, :post, :put, :patch, :delete, :options, :head],
