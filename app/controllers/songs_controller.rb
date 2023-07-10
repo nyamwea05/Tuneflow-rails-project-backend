@@ -40,15 +40,18 @@ class SongsController < ApplicationController
     def destroy
       song = Song.find_by(id: params[:id])
       if song
-        song.playlist.destroy_all
-        song.favorites.destroy_all
-        song.comments.destroy_all
+        song.playlist.destroy
+        song.favorites.destroy
+        song.comments.destroy
         song.destroy
         head :no_content
       else
         render_error("Song not found")
       end
     end
+ 
+
+
 
     private
 

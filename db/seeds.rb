@@ -1,3 +1,4 @@
+puts "Seeding start"
 # Seed data for Users
 20.times do
   user = User.create!(
@@ -101,3 +102,5 @@ end
     user_id: User.pluck(:id).sample
   )
 end
+
+puts "Seeding Done !"

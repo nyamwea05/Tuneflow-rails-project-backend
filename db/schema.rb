@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_07_05_112245) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "albums", force: :cascade do |t|
     t.string "name"
     t.string "album_image_url"
@@ -28,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_112245) do
 
   create_table "comments", force: :cascade do |t|
     t.string "comment"
-    t.integer "song_id", null: false
+    t.bigint "song_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
@@ -36,8 +39,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_112245) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "song_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "song_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["song_id"], name: "index_favorites_on_song_id"
@@ -58,9 +61,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_112245) do
     t.string "description"
     t.string "image_path"
     t.string "release_date"
-    t.integer "artist_id", null: false
-    t.integer "album_id", null: false
-    t.integer "playlist_id", null: false
+    t.bigint "artist_id", null: false
+    t.bigint "album_id", null: false
+    t.bigint "playlist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["album_id"], name: "index_songs_on_album_id"

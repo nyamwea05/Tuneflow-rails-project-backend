@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get '/artists/:id/albums', to: 'artists#albums'
   get '/albums/:id/songs', to: 'albums#albumsong'
 
+
+
   patch '/users/:username/update_password', to: 'users#update_password'
 
 
